@@ -1,0 +1,89 @@
+<main class="contenedor panel-administracion">
+    <h1><%= nombrePagina %>
+
+    <div class="contenedor-botones">
+        <a href="/nuevo-grupo" class="btn btn-naranja"> Nuevo Grupo </a>
+
+        <a href="/nuevo-meeti" class="btn btn-azul"> Nuevo Meeti </a>
+
+        <a href="/editar-perfil" class="btn btn-rosa"> Editar Perfil </a>
+
+        <a href="/imagen-perfil" class="btn btn-naranja"> Imagen Perfil </a>
+        
+    </div>
+
+    <div class="seccion-admin">
+        <h2> Tus Eventos</h2>
+        <ul>
+            <li>
+                <div class="informacion-admin">
+                    <p class="fecha">Lunes, 27 de Octubre de 2025 </p>
+                    <h3>E-Commerce en México</h3>
+                    <small>23 Asistentes</small>
+                </div>
+
+                <div class="acciones contenedor-botones">
+                    <a href="#" class="btn btn-verde"> Editar</a>
+                    <a href="#" class="btn btn-azul2">Asistentes</a>
+                    <a href="#" class="btn btn-rojo">Eliminar</a>
+                </div>
+
+            </li>
+
+            <li>
+                <div class="informacion-admin">
+                    <p class="fecha">Martes, 28 de Octubre de 2025 </p>
+                    <h3>Bitcoin y otras criptomonedas</h3>
+                    <small>30 Asistentes</small>
+                </div>
+
+                <div class="acciones contenedor-botones">
+                    <a href="#" class="btn btn-verde"> Editar</a>
+                    <a href="#" class="btn btn-azul2">Asistentes</a>
+                    <a href="#" class="btn btn-rojo">Eliminar</a>
+                </div>
+
+            </li>
+
+            <li>
+                <div class="informacion-admin">
+                    <p class="fecha">Miercoles, 29 de Octubre de 2025 </p>
+                    <h3>Node México</h3>
+                    <small>230 Asistentes</small>
+                </div>
+
+                <div class="acciones contenedor-botones">
+                    <a href="#" class="btn btn-verde"> Editar</a>
+                    <a href="#" class="btn btn-azul2">Asistentes</a>
+                    <a href="#" class="btn btn-rojo">Eliminar</a>
+                </div>
+
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="seccion-admin">
+        <h2> Tus Grupos </h2> 
+        <% if(grupos.length) { %>            
+            <ul>
+                <% grupos.forEach(grupo => { %>
+                    <li>
+                        <div class="informacion-admin">
+                            <h3><%= grupo.nombre %></h3>
+                        </div>
+
+                        <div class="acciones contenedor-botones">
+                            <a href="/editar-grupo/<%= grupo.id %>" class="btn btn-verde"> Editar</a>
+                            <a href="/imagen-grupo/<%= grupo.id %>" class="btn btn-azul2">Imagen</a>
+                            <a href="/eliminar-grupo/<%= grupo.id %>" class="btn btn-rojo">Eliminar</a>
+                        </div>
+
+                    </li> 
+                <% }) %>           
+            </ul>
+        <% } else { %>
+            <p class="mensaje"> No tienes grupos aún </p>
+        <% } %>
+    </div>
+</main>
