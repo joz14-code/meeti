@@ -635,3 +635,8 @@ aside .ubicacion {
 aside img {
     display: block;
 }
+
+#mapa {
+  height: 400px; /* o 100vh, según prefiera */
+  width: 100%;
+}
