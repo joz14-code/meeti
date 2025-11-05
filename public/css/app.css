@@ -639,4 +639,5 @@ aside img {
 #mapa {
   height: 400px; /* o 100vh, según prefiera */
   width: 100%;
+  margin-bottom: 2rem;
 }
