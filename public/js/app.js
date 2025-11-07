@@ -1,6 +1,4 @@
 import { OpenStreetMapProvider } from "leaflet-geosearch";
-import * as Esri from 'esri-leaflet';
-import * as Geocoder from 'esri-leaflet-geocoder';
 
 const lat = 4.81428
 const lng = -75.69488
@@ -20,18 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function buscarDireccion(e) {
     if(e.target.value.length > 8) {
-        
+
         // si existe un pin anterior limpiarlo
         markers.clearLayers();
 
-        const geocodeService = Geocoder.geocodeService();
+        //NOTA: Se debe instalar la version 2.7.0 de leaflet-geosearch para que no de el error de Geocoding Undefined
+        const geocodeService = L.esri.Geocoding.geocodeService();
         const provider = new OpenStreetMapProvider();
+
         provider.search({ query: e.target.value }).then(( resultado ) => {
 
-            geocodeService.reverse().latlng(resultado[0].bounds[0], 15).run(function(error, result) {
-                //quité zoom de 15
-                //el console.log da undefined
-                console.log(result);
+            geocodeService.reverse().latlng(resultado[0].bounds[0], 15 ).run(function(error, result) {
+                llenarInputs(result);
+                
                 
                 // console.log(resultado);
                 // mostrar el mapa
@@ -49,15 +48,35 @@ function buscarDireccion(e) {
                 // asignar al contenedor markers
                 markers.addLayer(marker);
 
+
                 // detectar movimiento del marker
                 marker.on('moveend', function(e) {
                     marker = e.target;
                     const posicion = marker.getLatLng();
-                    map.panTo(new L.LatLng(posicion.lat, posicion.lng) );                
+                    map.panTo(new L.LatLng(posicion.lat, posicion.lng) );
+
+                    // reverse geocoding, cuando el usuario reubica el pin
+                    geocodeService.reverse().latlng(posicion, 15 ).run(function(error, result) {
+
+                        llenarInputs(result);
                     
+                        // asigna los valores al popup del marker
+                        marker.bindPopup(result.address.LongLabel);
+                    });
                 })
             })
 
         })
     }
+}
+
+function llenarInputs(resultado) {
+
+    console.log(resultado);
+    document.querySelector('#direccion').value = resultado.address.Address || "";
+    document.querySelector('#ciudad').value = resultado.address.City || "";
+    document.querySelector('#estado').value = resultado.address.Region || "";
+    document.querySelector('#pais').value = resultado.address.CountryCode || "";
+    document.querySelector('#lat').value = resultado.latlng.lat || "";
+    document.querySelector('#lng').value = resultado.latlng.lng || "";
 }
