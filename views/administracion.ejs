@@ -13,54 +13,30 @@
     </div>
 
     <div class="seccion-admin">
-        <h2> Tus Eventos</h2>
-        <ul>
-            <li>
-                <div class="informacion-admin">
-                    <p class="fecha">Lunes, 27 de Octubre de 2025 </p>
-                    <h3>E-Commerce en México</h3>
-                    <small>23 Asistentes</small>
-                </div>
+        <h2> Próximos Meeti's </h2>
+        <% if(meeti.length > 0) { %>
+            <ul>
+                <% meeti.forEach(meet => { %>
+                    <li>
+                        <div class="informacion-admin">
+                            <% moment.locale('es') %>
+                            <% const fecha = moment(meet.fecha + ' ' + meet.hora).format('LLLL') %> 
+                            <p class="fecha"><%= fecha %></p>
+                            <h3><%= meet.titulo %></h3>
+                            <small><%= meet.interesados.length %> Interesados</small>
+                        </div>
 
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde"> Editar</a>
-                    <a href="#" class="btn btn-azul2">Asistentes</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-
-            </li>
-
-            <li>
-                <div class="informacion-admin">
-                    <p class="fecha">Martes, 28 de Octubre de 2025 </p>
-                    <h3>Bitcoin y otras criptomonedas</h3>
-                    <small>30 Asistentes</small>
-                </div>
-
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde"> Editar</a>
-                    <a href="#" class="btn btn-azul2">Asistentes</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-
-            </li>
-
-            <li>
-                <div class="informacion-admin">
-                    <p class="fecha">Miercoles, 29 de Octubre de 2025 </p>
-                    <h3>Node México</h3>
-                    <small>230 Asistentes</small>
-                </div>
-
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde"> Editar</a>
-                    <a href="#" class="btn btn-azul2">Asistentes</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-
-            </li>
-        </ul>
-
+                        <div class="acciones contenedor-botones">
+                            <a href="/editar-meeti/<%= meet.id %>" class="btn btn-verde"> Editar</a>
+                            <a href="/asistentes-meeti/<%= meet.id %>" class="btn btn-azul2">Asistentes</a>
+                            <a href="/eliminar-meeti/<%= meet.id %>" class="btn btn-rojo">Eliminar</a>
+                        </div>
+                    </li>   
+                <% }) %>         
+            </ul>
+        <% } else { %>
+            <p class="mensaje"> No tienes meetis aún </p>
+        <% } %>
     </div>
 
     <div class="seccion-admin">
@@ -84,6 +60,33 @@
             </ul>
         <% } else { %>
             <p class="mensaje"> No tienes grupos aún </p>
+        <% } %>
+    </div>
+
+    <div class="seccion-admin">
+        <h2> Meeti's Anteriores </h2>
+        <% if(anteriores.length > 0) { %>
+            <ul>
+                <% anteriores.forEach(meet => { %>
+                    <li>
+                        <div class="informacion-admin">
+                            <% moment.locale('es') %>
+                            <% const fecha = moment(meet.fecha + ' ' + meet.hora).format('LLLL') %> 
+                            <p class="fecha"><%= fecha %></p>
+                            <h3><%= meet.titulo %></h3>
+                            <small><%= meet.interesados.length %> Interesados</small>
+                        </div>
+
+                        <div class="acciones contenedor-botones">
+                            <a href="/editar-meeti/<%= meet.id %>" class="btn btn-verde"> Editar</a>
+                            <a href="/asistentes-meeti/<%= meet.id %>" class="btn btn-azul2">Asistentes</a>
+                            <a href="/eliminar-meeti/<%= meet.id %>" class="btn btn-rojo">Eliminar</a>
+                        </div>
+                    </li>   
+                <% }) %>         
+            </ul>
+        <% } else { %>
+            <p class="mensaje"> No tienes Meeti's anteriores </p>
         <% } %>
     </div>
 </main>

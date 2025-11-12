@@ -96,14 +96,24 @@ module.exports = function() {
         gruposController.eliminarGrupo
     )
 
-
     //Nuevos Meeti
     router.get('/nuevo-meeti', 
         authController.usuarioAutenticado,
         meetiController.formNuevoMeeti
     )
 
+    //Nuevos Meeti
+    router.post('/nuevo-meeti', 
+        authController.usuarioAutenticado,
+        meetiController.sanitizarMeeti,
+        meetiController.crearMeeti
+    )
 
+    //Editar Meeti
+    router.get('/editar-meeti/:meetiId', 
+        authController.usuarioAutenticado,
+        meetiController.formEditarMeeti
+    )
 
     return router;
 }
