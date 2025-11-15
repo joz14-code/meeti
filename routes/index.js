@@ -110,9 +110,32 @@ module.exports = function() {
     )
 
     //Editar Meeti
-    router.get('/editar-meeti/:meetiId', 
+    router.get('/editar-meeti/:id', 
         authController.usuarioAutenticado,
         meetiController.formEditarMeeti
+    )
+
+    router.post('/editar-meeti/:id', 
+        authController.usuarioAutenticado,
+        meetiController.sanitizarMeeti,
+        meetiController.editarMeeti
+    )
+
+    //Eliminar Meeti
+    router.get('/eliminar-meeti/:id', 
+        authController.usuarioAutenticado,
+        meetiController.formEliminarMeeti
+    )
+
+    router.post('/eliminar-meeti/:id', 
+        authController.usuarioAutenticado,
+        meetiController.eliminarMeeti
+    )
+
+    //Editar información de perfil
+    router.get('/editar-perfil',
+        authController.autenticarUsuario,
+        usuariosController.formEditarPerfil
     )
 
     return router;
