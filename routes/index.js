@@ -134,9 +134,27 @@ module.exports = function() {
 
     //Editar información de perfil
     router.get('/editar-perfil',
-        authController.autenticarUsuario,
+        authController.usuarioAutenticado,
         usuariosController.formEditarPerfil
     )
+
+    router.post('/editar-perfil',
+        authController.usuarioAutenticado,
+        usuariosController.editarPerfil
+    )
+
+    //modifica la contraseña
+    router.get('/cambiar-password',
+        authController.usuarioAutenticado,
+        usuariosController.formCambiarPassword
+    )    
+
+    router.post('/cambiar-password',
+        authController.usuarioAutenticado,
+        usuariosController.cambiarPassword
+    ) 
+
+    //video 331 desde el principio
 
     return router;
 }

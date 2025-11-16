@@ -43,12 +43,8 @@ exports.crearMeeti = async (req, res) => {
         const erroresSequelize = error.errors.map(err => err.message);
         req.flash('error', erroresSequelize);
         res.redirect('/nuevo-meeti');
-    }
-
-    //sale error al guardar el meeti-video 316 final
-    
-
-    console.log(meeti);
+    }    
+    //console.log(meeti);
 }
 
 //sanitizar meeti

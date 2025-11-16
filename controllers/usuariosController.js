@@ -1,6 +1,7 @@
 const Usuarios = require('../models/Usuarios');
 const { validationResult } = require('express-validator');
 const enviarEmail = require('../handlers/emails')
+const { body } = require('express-validator');
 
 exports.formCrearCuenta = (req, res) => {
     res.render('crear-cuenta', {
@@ -84,4 +85,70 @@ exports.formIniciarSesion = (req,res) => {
     res.render('iniciar-sesion' , {
         nombrePagina : 'Iniciar Sesión'
     })
+
+}
+
+exports.formEditarPerfil = async (req, res) => {
+
+    const usuario = await Usuarios.findByPk(req.user.id);
+
+    res.render('editar-perfil', {
+        nombrePagina: 'Editar Perfil',
+        usuario
+    })
+
+}
+
+
+//almacenaa en la bd los cambios del perfil
+exports.editarPerfil = async (req, res) => {
+
+    const usuario = await Usuarios.findByPk(req.user.id);
+
+    body('nombre').trim().escape()
+    body('email').trim().escape()
+    
+    //leer datos del form
+    const {nombre, descripcion, email} = req.body
+
+    //asignar los valores 
+    usuario.nombre = nombre
+    usuario.descripcion = descripcion
+    usuario.email = email
+
+    //guardar en la bd
+    await usuario.save()
+    req.flash('exito', 'Cambios guardados correctamente')
+    res.redirect('/administracion')
+
+}
+
+//muestra el formulario para cambiar el password
+exports.formCambiarPassword = (req, res) => {
+    res.render('cambiar-password',{
+        nombrePagina: 'Cambiar Contraseña'
+    })
+}
+
+//revisa si la contraseña anterior es correcta y lo modifica por uno nuevo
+exports.cambiarPassword = async (req, res, next) => {
+    const usuario = await Usuarios.findByPk(req.user.id)
+
+    //verificar que la contraseña anterior sea correcto
+    if(!usuario.validarPassword(req.body.anterior)){
+        req.flash('error', 'La contraseña actual es incorrecta')
+        res.redirect('/administracion')
+        return next()
+    }
+
+    console.log('todo bien')
+
+    //si la contraseña es correcto, hashear el nuevo
+
+
+    //asignar la contraseña al usuario
+
+    //guardar en la bd
+
+    //redireccionar
 }
