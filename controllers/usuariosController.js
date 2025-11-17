@@ -2,6 +2,11 @@ const Usuarios = require('../models/Usuarios');
 const { validationResult } = require('express-validator');
 const enviarEmail = require('../handlers/emails')
 const { body } = require('express-validator');
+const multer = require('multer');
+const fs = require('fs');
+const shortid = require('shortid');
+const { console } = require('inspector');
+
 
 exports.formCrearCuenta = (req, res) => {
     res.render('crear-cuenta', {
@@ -141,14 +146,95 @@ exports.cambiarPassword = async (req, res, next) => {
         return next()
     }
 
-    console.log('todo bien')
-
+    //console.log('todo bien')
     //si la contraseña es correcto, hashear el nuevo
-
+    const hash = usuario.hashPassword(req.body.nuevo)
+    console.log(hash)
 
     //asignar la contraseña al usuario
+    usuario.password = hash
 
     //guardar en la bd
+    await usuario.save()
 
     //redireccionar
+    req.logout(function(err) {
+        if (err) { return next(err); } 
+        req.flash('exito', 'Contrasña Actualizada Correctamente, vuelve a Iniciar Sesión')
+        res.redirect('/iniciar-sesion')       
+    });
+    //video 332 desde el principio(imagen perfil), es el mismo de la imagen para los grupos
+ 
+}
+
+exports.formImagenPerfil = async (req, res) => {
+    const usuario = await Usuarios.findByPk(req.user.id)
+
+    res.render('imagen-perfil', {
+        nombrePagina : `Editar Imagen Perfil: ${usuario.nombre}`,
+        usuario
+    })
+}
+
+
+const configuracionMulter = {
+
+    limits: {
+        fileSize: 200000 //200KB
+    },
+    storage : fileStorage = multer.diskStorage({
+        destination : (req, file, next) => {
+            next(null, __dirname+'../../public/uploads/perfiles')
+        },
+        filename : (req, file, next) => {
+            const extension = file.mimetype.split('/')[1];
+            next(null, `${shortid.generate()}.${extension}`)
+        }
+    }),
+   
+    fileFilter(req, file, next) {        
+        if (file.mimetype.startsWith('image/')) {
+            //el formato es valido
+            next(null, true);
+        } else {
+            //El formato no es valido
+            next(new Error('Formato no válido'), false);
+            
+        }
+    }
+}
+
+const upload = multer(configuracionMulter).single('imagen');
+
+//sube imagen en el servidor
+exports.imagenPerfil = async (req, res, next) => {
+    const usuario = await Usuarios.findByPk(req.user.id)
+
+    upload(req, res, function(error) {
+        if(error) {
+            if(error instanceof multer.MulterError) {
+                if(error.code === 'LIMIT_FILE_SIZE') {
+                    req.flash('error', 'El archivo es muy grande: Máximo 200KB');
+                } else {
+                    req.flash('error', error.message);
+                }
+            }else if (error.hasOwnProperty('message')) {
+                req.flash('error', error.message);
+            }
+
+            const backURL = req.get('referer');
+            return res.redirect(backURL);
+
+        }         
+    })   
+    
+    if(req.file) {
+        usuario.imagen = req.file.filename;
+        await usuario.save();
+
+        console.log('todo bien', usuario.imagen);
+    }
+    
+    next()
+
 }

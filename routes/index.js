@@ -154,6 +154,17 @@ module.exports = function() {
         usuariosController.cambiarPassword
     ) 
 
+    //imagen perfil
+    router.get('/imagen-perfil', 
+        authController.usuarioAutenticado,
+        usuariosController.formImagenPerfil,        
+    )
+   
+    router.post('/imagen-perfil', 
+        authController.usuarioAutenticado,
+        usuariosController.imagenPerfil,        
+    )
+
     //video 331 desde el principio
 
     return router;
