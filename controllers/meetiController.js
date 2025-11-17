@@ -30,7 +30,7 @@ exports.crearMeeti = async (req, res) => {
     //cupo opcional
     if(req.body.cupo === '') {
         meeti.cupo = 0;
-    }
+    }    
 
     //almacena en la base de datos
     try {

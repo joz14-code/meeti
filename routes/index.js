@@ -10,6 +10,8 @@ const gruposController = require('../controllers/gruposController')
 const meetiController = require('../controllers/meetiController')
 
 module.exports = function() {
+    ////  AREA PÚBLICA ////
+    
     router.get('/', homeController.home);
 
     //Crear y confirmar cuentas
@@ -36,6 +38,10 @@ module.exports = function() {
         authController.cerrarSesion
 
     )
+
+
+
+    ////  AREA PRIVADA //////
 
     //panel de administración 
     router.get('/administracion', 

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db');
-const {v4: uuid} = require('uuid');//genera id unico
+const {v4 : uuidv4} = require('uuid')//genera id unico
 const slugify = require('slugify');//genera url//slug no funciona, toca instalar slugify
 const shortid = require('shortid');//genera url
 
@@ -13,9 +13,8 @@ const Meeti = db.define(
         id : {
             type: Sequelize.UUID,
             primaryKey: true,
-            allowNull: false,
-            defaultValue: uuid()
-            
+            allowNull: false,  
+            defaultValue : () => uuidv4()         
         },
 
         titulo : {

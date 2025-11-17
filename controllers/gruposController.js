@@ -5,6 +5,7 @@ const multer = require('multer');
 const shortid = require('shortid');
 const fs = require('fs');
 
+
 const configuracionMulter = {
 
     limits: {
@@ -79,7 +80,8 @@ exports.crearGrupo = async (req, res) => {
     //leer imagen
     if(req.file){
         grupo.imagen = req.file.filename
-    }    
+    }  
+    
         
     try {
 
