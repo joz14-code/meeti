@@ -30,6 +30,13 @@ module.exports = function() {
     router.get('/iniciar-sesion', usuariosController.formIniciarSesion)
     router.post('/iniciar-sesion', authController.autenticarUsuario)
 
+    //Cerrar Sesion
+    router.get('/cerrar-sesion',
+        authController.usuarioAutenticado,
+        authController.cerrarSesion
+
+    )
+
     //panel de administración 
     router.get('/administracion', 
         authController.usuarioAutenticado,
@@ -166,7 +173,7 @@ module.exports = function() {
         usuariosController.guardarImagenPerfil,        
     )
 
-    //video 331 desde el principio
+    
 
     return router;
 }

@@ -26,9 +26,9 @@
 
         <nav class="nav">
            <% if(locals.usuario.id) { %>
-                <%- include partials/nav-autenticado.ejs%>            
-           <% }else { %>
-                <%- include partials/nav-no-autenticado.ejs%>
+                <%- include('partials/nav-autenticado.ejs')%>            
+           <% } else { %>
+                <%- include('partials/nav-no-autenticado.ejs')%>
            
            <% } %>
         </nav>
