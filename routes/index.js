@@ -162,7 +162,8 @@ module.exports = function() {
    
     router.post('/imagen-perfil', 
         authController.usuarioAutenticado,
-        usuariosController.imagenPerfil,        
+        usuariosController.subirImagen,
+        usuariosController.guardarImagenPerfil,        
     )
 
     //video 331 desde el principio

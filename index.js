@@ -55,6 +55,8 @@ app.use(flash());
 
 //Middleware (usuario logueado, flash messages, etc)
 app.use((req, res, next) => {
+  res.locals.usuario = {...req.user} || null
+  //no funciona los navs en layout
   res.locals.mensajes = req.flash();
   const fecha = new Date();
   res.locals.year = fecha.getFullYear();
