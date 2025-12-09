@@ -173,8 +173,17 @@ p {
     border-radius: 50%;
     background-color: #e1e1e1;
     height: 50px;
-    width: 50px;
+    width: 50px;    
+    overflow: hidden;
 }
+
+.info-autor .imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 50%; 
+}
+
 .info-autor .autor {
     font-weight: 700;
     margin-top: .5rem;
@@ -628,10 +637,15 @@ trix-toolbar .trix-button--icon-strike {
 aside .fecha {
     background-image: url(../img/icono-hora.svg);
     margin-bottom: 2rem;
+
+    
 }
 aside .ubicacion {
     background-image: url(../img/icono-ubicacion.svg);
-}
+   
+}  
+
+
 aside img {
     display: block;
 }
@@ -640,4 +654,10 @@ aside img {
   height: 400px; /* o 100vh, según prefiera */
   width: 100%;
   margin-bottom: 2rem;
+}
+
+#ubicacion-meeti {
+    height: 300px; 
+    width: 90%;
+    margin-bottom: 2rem;
 }
