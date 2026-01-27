@@ -25,9 +25,25 @@
 
         <div class="pregunta-asistencia">
             <% if(usuario.id) {%>
-                <p>¿Asistirás?</p>
-                <a href="#" class="btn btn-azul">Si</a>
-            <% } %>            
+                <% const existe = meeti.interesados.includes(usuario.id) %>
+                <form action="/confirmar-asistencia/<%= meeti.slug %>" id="confirmar-asistencia">
+                    <p>¿Asistirás?</p>
+
+                    <% if(existe) { %>
+                        <input type="hidden" id="accion" value="Cancelar">
+                        <input type="submit" class="btn btn-rojo" value="Cancelar Asistencia">
+
+                    <% } else { %>
+                        <input type="hidden" id="accion" value="Confirmar">
+                        <input type="submit" class="btn btn-azul" value="¡Sí!">
+
+                    <% } %>     
+                    <div id="mensaje"></div>          
+                </form>                
+                
+            <% } else { %> 
+                <p>Inicia sesión para confirmar asistencia</p>
+            <% } %>
         </div>
     </div>
 </div>
@@ -84,22 +100,28 @@
             </div><!--comentarios-->
         </div><!--informacion-evento-->
         
-        <aside class="informacion">
-            <div class="fecha">
+        <aside class="info-evento">
+
+            <div class="info-bloque fecha">
                 <% moment.locale('es'); %>
-                <% const fecha = meeti.fecha + ' ' + meeti.hora; %>
-                <p><%= moment(fecha).format('LLLL') %> Horas</p>
+                <% const fecha = meeti.fecha + ' ' + meeti.hora; %>                
+                <p class="dato"><%= moment(fecha).format('LLLL') %> Hrs</p>
             </div>
 
-            <div class="ubicacion">
-                <p><%= meeti.direccion %>, <%= meeti.ciudad %>, <%= meeti.estado %>, <%= meeti.pais %></p>
+            <div class="info-bloque ubicacion">                
+                <p class="dato"><%= meeti.direccion %>, <%= meeti.ciudad %>, <%= meeti.estado %>, <%= meeti.pais %></p>
             </div>
 
             <!--Mapa-->
             <input type="hidden" id="lat" value="<%= meeti.ubicacion.coordinates[0] %>">
             <input type="hidden" id="lng" value="<%= meeti.ubicacion.coordinates[1] %>">
             <input type="hidden" id="direccion" value="<%= meeti.direccion %>">
+
+           
             <div id="ubicacion-meeti"></div>
+           
+
         </aside>
+
     </div>
 </main>

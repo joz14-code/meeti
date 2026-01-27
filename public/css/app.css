@@ -634,14 +634,26 @@ trix-toolbar .trix-button--icon-strike {
     margin: 0;
 }
 
-aside .fecha {
+.info-bloque.fecha {
     background-image: url(../img/icono-hora.svg);
-    margin-bottom: 2rem;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 32px;         /* tamaño fijo y visible */
+    padding-left: 50px;            /* espacio para que no tape el texto */
+    width: 100%;
+    height: auto;
 
     
 }
-aside .ubicacion {
-    background-image: url(../img/icono-ubicacion.svg);
+
+.info-bloque.ubicacion {
+    background-image: url(../img/icono-ubicacion.svg);    
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 32px;         /* tamaño fijo y visible */
+    padding-left: 50px;            /* espacio para que no tape el texto */
+    width: 100%;
+    height: auto;
    
 }  
 
@@ -657,7 +669,10 @@ aside img {
 }
 
 #ubicacion-meeti {
-    height: 300px; 
     width: 90%;
-    margin-bottom: 2rem;
+    height: 300px;    
+    overflow: hidden;
 }
+
+
+
