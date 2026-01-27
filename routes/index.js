@@ -38,6 +38,10 @@ module.exports = function() {
     usuariosController.crearNuevaCuenta);
     router.get('/confirmar-cuenta/:correo', usuariosController.confirmarCuenta)
 
+    //Muestra asistentes al Meeti
+    router.get('/asistentes/:slug', meetiControllerFE.mostrarAsistentes)
+
+
     //Iniciar Sesion
     router.get('/iniciar-sesion', usuariosController.formIniciarSesion)
     router.post('/iniciar-sesion', authController.autenticarUsuario)

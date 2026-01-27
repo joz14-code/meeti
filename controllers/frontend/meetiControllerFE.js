@@ -43,7 +43,7 @@ exports.confirmarAsistencia = async (req, res) => {
 
     if(accion === 'confirmar') {
         //agregar el usuario
-        Meeti.update(
+        await Meeti.update(
             {'interesados': Sequelize.fn('array_append', Sequelize.col('interesados'), req.user.id)},
             {'where' : { 'slug': req.params.slug } }
         );
@@ -53,7 +53,7 @@ exports.confirmarAsistencia = async (req, res) => {
 
     }else{
         //eliminar asistencia
-        Meeti.update(
+        await Meeti.update(
             {'interesados': Sequelize.fn('array_remove', Sequelize.col('interesados'), req.user.id)},
             {'where' : { 'slug': req.params.slug } }
         );
@@ -63,3 +63,21 @@ exports.confirmarAsistencia = async (req, res) => {
 
     }    
 }    
+
+//Muestra el listado de asistentes
+exports.mostrarAsistentes = async (req, res) => {
+    const meeti = await Meeti.findOne({
+                                    where: { slug : req.params.slug},
+                                    attributes: ['interesados']
+    })
+
+    //Extraer interesados
+    const{ interesados } = meeti
+    const asistentes = await Usuarios.findAll({
+        attributes: ['nombre', 'imagen'],
+        where : { id : interesados}
+    })
+
+    console.log(asistentes)
+   
+}

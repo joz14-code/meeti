@@ -13,7 +13,7 @@ function confirmarAsistencia(e) {
     const btn = document.querySelector('#confirmar-asistencia input[type="submit"]');
     let accion = document.querySelector('#accion').value;
     const mensaje = document.querySelector('#mensaje');
-    
+
     const datos = {
         accion
     }
@@ -30,7 +30,7 @@ function confirmarAsistencia(e) {
 
             }else {
 
-                document.querySelector('#accion').value = 'Confirmar';
+                document.querySelector('#accion').value = 'confirmar';
                 btn.value = 'Si';
                 btn.classList.remove('btn-rojo');
                 btn.classList.add('btn-azul');
@@ -38,7 +38,7 @@ function confirmarAsistencia(e) {
             }
 
             //mostrar mensaje
-            mensaje.appendChild(document.createTextNode(respuesta.data));
+            mensaje.textContent = respuesta.data;
 
 
         })
