@@ -8,7 +8,10 @@ const authController = require('../controllers/authController')
 const adminController = require('../controllers/adminController')
 const gruposController = require('../controllers/gruposController')
 const meetiController = require('../controllers/meetiController')
+
 const meetiControllerFE = require('../controllers/frontend/meetiControllerFE')
+const usuariosControllerFE = require('../controllers/frontend/usuariosControllerFE')
+const gruposControllerFE = require('../controllers/frontend/gruposControllerFE')
 
 module.exports = function() {
     ////  AREA PÚBLICA ////
@@ -23,6 +26,16 @@ module.exports = function() {
         //authController.usuarioAutenticado,
         meetiControllerFE.confirmarAsistencia
     );
+
+    //muestra perfiles
+    router.get('/usuarios/:id',
+        usuariosControllerFE.mostrarUsuario
+    )
+
+    //muestra los grupos en el front
+    router.get('/grupos/:id',
+        gruposControllerFE.mostrarGrupo
+    )
 
     //Crear y confirmar cuentas
     router.get('/crear-cuenta', usuariosController.formCrearCuenta);

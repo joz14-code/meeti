@@ -29,7 +29,11 @@
             <% meetis.forEach(meeti => { %>
                 <!-- <%= JSON.stringify(meeti)%> -->
                 <div class="card">
+                <% if(meeti.grupo.imagen) { %>
                     <img src="/uploads/grupos/<%= meeti.grupo.imagen %>">
+                <% } else { %>
+                    <img src="/img/meeti.jpg">
+                <% } %>
                     <div class="card-texto">
                         <% moment.locale('es')%>
                         <% const fecha = `${meeti.fecha} ${meeti.hora}`%>
